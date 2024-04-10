@@ -4,7 +4,9 @@ using UnityEngine;
 
 public class FollowCamera : MonoBehaviour
 {
-    [SerializeField] private Transform target;
+    [SerializeField] private float offset = -10;
+    [SerializeField] Transform target;
+    [SerializeField] private float speed;
     // Start is called before the first frame update
     void Start()
     {
@@ -14,10 +16,9 @@ public class FollowCamera : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        Vector3 movement;
-        movement.x = 0;
-        movement.y = target.position.y + 4.5f;
-        movement.z = target.position.z - 8;
-        transform.position = movement;
+        float z = transform.position.z + speed * Time.deltaTime; 
+        Vector3 position = transform.position;
+        position.z = Mathf.Min(target.position.z + offset, z);
+        transform.position = position;
     }
 }
